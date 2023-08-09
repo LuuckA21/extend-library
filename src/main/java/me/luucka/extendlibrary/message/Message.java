@@ -25,8 +25,10 @@ public class Message {
 
     public void addPrefix() {
         if (!messages.containsKey("prefix")) return;
+        addPrefix(messages.get("prefix"));
+    }
 
-        String prefix = messages.get("prefix");
+    public void addPrefix(final String prefix) {
         messages.replaceAll((k, v) -> v.replace("<prefix>", prefix));
     }
 
