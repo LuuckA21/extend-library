@@ -23,6 +23,13 @@ public class Message {
         registerDefaultSerializers();
     }
 
+    public void addPrefix() {
+        if (!messages.containsKey("prefix")) return;
+
+        String prefix = messages.get("prefix");
+        messages.replaceAll((k, v) -> v.replace("<prefix>", prefix));
+    }
+
     private String getMessage(String messageKey) throws UnknownMessageKeyException {
         if (!messages.containsKey(messageKey)) {
             throw new UnknownMessageKeyException(messageKey);
