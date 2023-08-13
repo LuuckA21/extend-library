@@ -1,11 +1,15 @@
 package me.luucka.extendlibrary.util;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableSet;
 import org.bukkit.Bukkit;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public final class VersionUtil {
 
@@ -18,6 +22,8 @@ public final class VersionUtil {
     public static final ServerVersion v1_19_4_R01 = ServerVersion.fromString("1.19.4-R0.1-SNAPSHOT");
     public static final ServerVersion v1_20_1_R01 = ServerVersion.fromString("1.20.1-R0.1-SNAPSHOT");
 
+    private static final Set<ServerVersion> allVersions = ImmutableSet.of(v1_13_2_R01, v1_14_4_R01, v1_15_2_R01, v1_16_5_R01, v1_17_1_R01, v1_18_2_R01, v1_19_4_R01, v1_20_1_R01);
+
     private static ServerVersion serverVersion = null;
 
     public static ServerVersion getServerVersion() {
@@ -27,8 +33,18 @@ public final class VersionUtil {
         return serverVersion;
     }
 
+    private static final Set<ServerVersion> supportedVersions = new HashSet<>();
+
+    public static Set<ServerVersion> getSupportedVersions() {
+        return VersionUtil.supportedVersions;
+    }
+
     public static boolean isServerVersionSupported(ServerVersion minVersion) {
-        return getServerVersion().isHigherThanOrEqualTo(minVersion);
+        VersionUtil.supportedVersions.clear();
+        VersionUtil.supportedVersions.addAll(allVersions.stream()
+                .filter(version -> version.isHigherThanOrEqualTo(minVersion))
+                .collect(Collectors.toSet()));
+        return VersionUtil.supportedVersions.contains(getServerVersion());
     }
 
     private VersionUtil() {
