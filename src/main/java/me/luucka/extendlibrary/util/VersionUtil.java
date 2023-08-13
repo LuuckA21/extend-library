@@ -144,7 +144,7 @@ public final class VersionUtil {
             if (patch != 0) {
                 sb.append(".").append(patch);
             }
-            return sb.append("-R").append(revision).toString();
+            return sb.toString();
         }
 
         @Override
