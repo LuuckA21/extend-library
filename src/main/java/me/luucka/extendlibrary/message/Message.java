@@ -68,15 +68,6 @@ public class Message implements IReload {
         resourceBundle.keySet().forEach(key -> messages.put(key, resourceBundle.getString(key)));
     }
 
-    public void addPrefix() {
-        if (!messages.containsKey("prefix")) return;
-        addPrefix(messages.get("prefix"));
-    }
-
-    public void addPrefix(final String prefix) {
-        messages.replaceAll((k, v) -> v.replace("<prefix>", prefix));
-    }
-
     private String getMessage(String messageKey) throws UnknownMessageKeyException {
         if (!messages.containsKey(messageKey)) {
             throw new UnknownMessageKeyException(messageKey);
@@ -108,6 +99,6 @@ public class Message implements IReload {
     }
 
     public MessageBuilder from(String messageKey) {
-        return new MessageBuilder(serializerMap, getMessage(messageKey));
+        return new MessageBuilder(serializerMap, getMessage("prefix"), getMessage(messageKey));
     }
 }

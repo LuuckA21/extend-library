@@ -1,6 +1,7 @@
 package me.luucka.extendlibrary.message;
 
 import me.luucka.extendlibrary.message.exception.MissingSerializerException;
+import me.luucka.extendlibrary.message.serializer.StringSerializer;
 import me.luucka.extendlibrary.message.serializer.TypeSerializer;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -14,19 +15,18 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-@SuppressWarnings("PatternValidation")
 public class MessageBuilder {
     private final Map<Class<?>, TypeSerializer<?>> serializerMap;
     private final String message;
 
     private final Set<TagResolver> replacements = new HashSet<>();
 
-    public MessageBuilder(Map<Class<?>, TypeSerializer<?>> serializerMap, String message) {
+    public MessageBuilder(Map<Class<?>, TypeSerializer<?>> serializerMap, String prefix, String message) {
         this.serializerMap = serializerMap;
         this.message = message;
+        replacements.add(Placeholder.component("prefix", new StringSerializer().serialize(prefix)));
     }
 
-    @SuppressWarnings("unchecked")
     public <T> MessageBuilder with(String key, T value) {
         TypeSerializer<T> serializer1 = (TypeSerializer<T>) serializerMap.get(value.getClass());
 
@@ -75,7 +75,6 @@ public class MessageBuilder {
         return MiniMessage.miniMessage().deserialize(message, tagResolver);
     }
 
-    @SuppressWarnings("unused")
     public void send(Audience audience) {
         audience.sendMessage(this::build);
     }
