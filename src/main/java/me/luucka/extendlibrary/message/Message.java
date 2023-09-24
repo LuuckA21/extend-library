@@ -99,6 +99,6 @@ public class Message implements IReload {
     }
 
     public MessageBuilder from(String messageKey) {
-        return new MessageBuilder(serializerMap, getMessage("prefix"), getMessage(messageKey));
+        return new MessageBuilder(serializerMap, getMessage(messageKey), getMessage("prefix"));
     }
 }

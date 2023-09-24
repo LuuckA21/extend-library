@@ -1,7 +1,6 @@
 package me.luucka.extendlibrary.message;
 
 import me.luucka.extendlibrary.message.exception.MissingSerializerException;
-import me.luucka.extendlibrary.message.serializer.StringSerializer;
 import me.luucka.extendlibrary.message.serializer.TypeSerializer;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -21,10 +20,9 @@ public class MessageBuilder {
 
     private final Set<TagResolver> replacements = new HashSet<>();
 
-    public MessageBuilder(Map<Class<?>, TypeSerializer<?>> serializerMap, String prefix, String message) {
+    public MessageBuilder(Map<Class<?>, TypeSerializer<?>> serializerMap, String message, String prefix) {
         this.serializerMap = serializerMap;
-        this.message = message;
-        replacements.add(Placeholder.component("prefix", new StringSerializer().serialize(prefix)));
+        this.message = message.replace("<prefix>", prefix);
     }
 
     public <T> MessageBuilder with(String key, T value) {
