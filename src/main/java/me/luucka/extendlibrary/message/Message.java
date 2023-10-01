@@ -46,6 +46,12 @@ public class Message implements IReload {
     }
 
     private void saveFile() {
+        if (file.getParentFile() != null && !file.getParentFile().exists()) {
+            if (!file.getParentFile().mkdirs()) {
+                plugin.getLogger().log(Level.SEVERE, "Failed to create file: ", file.getParentFile().toString());
+            }
+        }
+
         if (!file.exists()) {
             try {
                 Files.copy(this.getClass().getResourceAsStream("/" + fileName + ".properties"), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
