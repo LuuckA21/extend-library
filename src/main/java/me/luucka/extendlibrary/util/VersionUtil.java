@@ -20,7 +20,7 @@ public final class VersionUtil {
     public static final ServerVersion v1_17_1_R01 = ServerVersion.fromString("1.17.1-R0.1-SNAPSHOT");
     public static final ServerVersion v1_18_2_R01 = ServerVersion.fromString("1.18.2-R0.1-SNAPSHOT");
     public static final ServerVersion v1_19_4_R01 = ServerVersion.fromString("1.19.4-R0.1-SNAPSHOT");
-    public static final ServerVersion v1_20_2_R01 = ServerVersion.fromString("1.20.2-R0.1-SNAPSHOT");
+    public static final ServerVersion v1_20_2_R01 = ServerVersion.fromString("1.20.4-R0.1-SNAPSHOT");
 
     private static final Set<ServerVersion> allVersions = ImmutableSet.of(v1_13_2_R01, v1_14_4_R01, v1_15_2_R01, v1_16_5_R01, v1_17_1_R01, v1_18_2_R01, v1_19_4_R01, v1_20_2_R01);
 
